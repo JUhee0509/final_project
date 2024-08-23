@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="n">
+
+	<!-- 공지 전체조회 -->
+	<select id="notice_list" resultType="notice"
+		parameterType="java.util.Map">
+		select * from (select rank() over(order by idx DESC) no,
+		n.* from (select * from NOTICE) n)
+		where no BETWEEN #{start} and #{end}
+	</select>
+
+	<!-- 공지 상세보기 -->
+	<select id="notice_one" resultType="notice" parameterType="int">
+		select * from NOTICE where idx=#{idx}
+	</select>
+
+	<!-- 게시물 수 -->
+	<select id="notice_count" parameterType="java.util.Map"
+		resultType="int">
+		select count(*) from NOTICE
+	</select>
+
+	<!-- 공지 등록 -->
+	<insert id="notice_insert" parameterType="notice">
+		insert into NOTICE
+		values(seq_notice_idx.nextVal, #{title}, #{content}, sysdate,
+		#{a_id})
+	</insert>
+
+	<!-- 공지 삭제 -->
+	<delete id="notice_delete" parameterType="int">
+		delete from NOTICE
+		where idx=#{idx}
+	</delete>
+
+	<!-- 공지 수정 -->
+	<update id="notice_update" parameterType="notice">
+		update NOTICE set
+		title=#{title}, content=#{content}, regdate=sysdate, a_id=#{a_id}
+		where idx=#{idx}
+	</update>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

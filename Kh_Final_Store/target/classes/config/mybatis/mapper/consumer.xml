@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="c">
+	
+	<!-- 회원가입 중 아이디 중복확인을 위해 호출 -->
+	<select id="check_id" resultType="consumer">
+		select * from consumer where c_id=#{c_id}
+	</select>
+	
+	<!-- 회원가입 하기 위해 호출 -->
+	<insert id="insert_user" parameterType="consumer">
+		insert into consumer values(
+			#{c_id},
+			#{name},
+			#{pwd},
+			#{email},
+			#{gender},
+			0,
+			0,
+			0,
+			#{tel}
+		)
+	</insert>
+	
+	<!-- 아이디 찾기 중 이메일 검색-->
+	<select id="ID_find_email" resultType="consumer" parameterType="consumer">
+		select * from consumer where email=#{email}
+	</select>
+	
+	<!-- 비밀번호 찾기 중 비밀번호만 업데이트-->
+	<update id="findPWD_update_pwd" parameterType="java.util.Map">
+		update consumer set 
+				pwd=#{pwd}
+		where c_id=#{c_id}
+	</update>
+	
+	<!-- 개인정보 수정 -->
+	<update id="member_update" parameterType="consumer">
+		update consumer set pwd=#{pwd}, name=#{name},
+						email=#{email}, tel=#{tel}
+		where c_id=#{c_id}
+	</update>
+	
+	<!-- 회원 목록 가져오기 -->
+	<select id="member_list" resultType="consumer" parameterType="consumer">
+		select * from consumer
+	</select>
+	
+	<!-- 관리자에서 회원 목록 업데이트 하기 -->
+	<update id="member_list_update" parameterType="consumer">
+		update consumer set
+				c_id=#{c_id},
+				name=#{name},
+				pwd=#{pwd},
+				email=#{email},
+				gender=#{gender},
+				bonus_point=#{bonus_point},
+				blacklist=#{blacklist},
+				del_info=#{del_info},
+				tel=#{tel}
+		where c_id=#{c_id}
+	</update>
+	
+	<!-- 회원정보 삭제 -->
+	<delete id="member_list_delete" parameterType="String">
+		delete from consumer where c_id=#{c_id}
+	</delete>
+	
+	<!-- 회원 정보 중 블랙리스트 업데이트 하기 -->
+	<update id="consumer_black_update" parameterType="consumer">
+		update consumer set
+			blacklist=1
+		where c_id=#{c_id}
+	</update>
+	
+	<!-- 적립금 -->
+	<update id="bonus_point" parameterType="consumer">
+		UPDATE consumer
+			SET bonus_point = (
+			    SELECT 
+			        (NVL((
+			            SELECT SUM(p.price * c.amount)
+			            FROM cart c
+			            JOIN product p ON c.p_idx = p.p_idx
+			            WHERE c.c_id = #{c_id}
+			        ), 0) -
+			        NVL((
+			            SELECT SUM(p.price * c.amount * p_rate / 100) + co.bonus_point
+			            FROM cart c
+			            JOIN product p ON c.p_idx = p.p_idx
+			            JOIN consumer co ON c.c_id = co.c_id
+			            WHERE c.c_id = #{c_id}
+			            GROUP BY c.c_id, co.bonus_point
+			        ), 0)) * 0.1 AS result
+			    FROM dual
+			)
+			WHERE c_id = #{c_id}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

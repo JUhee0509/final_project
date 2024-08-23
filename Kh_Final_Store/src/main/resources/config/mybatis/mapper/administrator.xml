@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ad">
+	
+	<insert id="insert_admin" parameterType="administrator">
+		insert into administrator values(
+			#{a_id},
+			#{name},
+			#{pwd},
+			#{email},
+			#{tel}
+		)
+	</insert>
+	
+	<select id="admin_check_id" resultType="administrator">
+		select * from ADMINISTRATOR where a_id=#{a_id}
+	</select>
+	
+	<select id="selectOne_Email" resultType="administrator" parameterType="String">
+		select * from ADMINISTRATOR where email=#{email}
+	</select>
+	
+		<!-- 비밀번호 찾기 중 비밀번호만 업데이트-->
+	<update id="findPWD_update_pwd" parameterType="java.util.Map">
+		update ADMINISTRATOR set 
+				pwd=#{pwd}
+		where a_id=#{a_id}
+	</update>
+	
+	<!-- 관리자 개인정보 수정 -->
+	<update id="admin_update" parameterType="consumer">
+		update ADMINISTRATOR set pwd=#{pwd}, name=#{name},
+						email=#{email}, tel=#{tel}
+		where a_id=#{a_id}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

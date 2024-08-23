@@ -1,0 +1,48 @@
+package vo;
+
+public class NoticeVO {
+
+	public String title, content, regdate, a_id;
+	public int idx;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getRegdate() {
+		return regdate;
+	}
+
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
+	}
+
+	public String getA_id() {
+		return a_id;
+	}
+
+	public void setA_id(String a_id) {
+		this.a_id = a_id;
+	}
+
+	public int getIdx() {
+		return idx;
+	}
+
+	public void setIdx(int idx) {
+		this.idx = idx;
+	}
+
+}

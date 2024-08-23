@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<annotation-driven />
+	<resources mapping="/resources/**" location="/resources/" />
+	
+	<!-- autowired 사용 -->
+	<context:annotation-config/>
+	
+	<!-- controller생성.지현  -->
+	<beans:bean class="com.kh.store.ShopController">
+		<beans:constructor-arg ref="product_daoBean"/>
+		<beans:constructor-arg ref="pick_daoBean"/>
+	</beans:bean>
+	
+	<beans:bean class="com.kh.store.NoticeController">
+		<beans:constructor-arg ref="notice_daoBean"/>
+	</beans:bean>
+	
+	<beans:bean class="com.kh.store.FaqController"> 
+		<beans:constructor-arg ref="faq_daoBean"/>
+	</beans:bean>
+	
+	<beans:bean class="com.kh.store.InquireController">
+		<beans:constructor-arg ref="inqcommBean"/>
+		<beans:constructor-arg ref="inq_daoBean"/>
+	</beans:bean>
+	
+	<!-- 현준님 -->
+	<beans:bean class="com.kh.store.MyPageController">
+	 	<beans:constructor-arg ref="addr_daoBean" /> 
+	 	<beans:constructor-arg ref="consumer_daoBean"/>
+	 </beans:bean> 
+	 
+	 <beans:bean class="com.kh.store.MyController">
+	 	<beans:property name="order_dao" 
+	 				ref="order_daoBean"/> 
+	 	<beans:property name="addr_dao" 
+	 				ref="addr_daoBean"/> 
+	 </beans:bean>
+	 
+	  <beans:bean class="com.kh.store.ReviewController">
+	 	<beans:constructor-arg ref="review_daoBean"/> 
+	 	<beans:constructor-arg ref="product_daoBean"/>
+	 </beans:bean>
+	 
+	 <beans:bean class="com.kh.store.CartController">
+	 	<beans:constructor-arg ref="cart_daoBean" />
+	 	<beans:constructor-arg ref="receipt_daoBean"/>
+	 	<beans:constructor-arg ref="orderdetail_daoBean"/>
+	 	<beans:constructor-arg ref="order_daoBean"/>
+	 	<beans:constructor-arg ref="consumer_daoBean"/>
+	 	
+	 </beans:bean>
+	
+	 <!-- 준희님 -->
+	 <beans:bean class="com.kh.store.MDController">
+			<beans:constructor-arg ref="md_daoBean"/>
+			<beans:constructor-arg ref="product_daoBean"/>
+			<beans:constructor-arg ref="review_daoBean"/>
+			<beans:constructor-arg ref="pick_daoBean"/>
+	</beans:bean>
+	
+	<!-- 홍경님 -->
+	 <beans:bean class="com.kh.store.LoginController">
+   		<beans:constructor-arg ref="consumer_daoBean"/>
+   		<beans:constructor-arg ref="mss"/>
+   		<beans:constructor-arg ref="administrator_daoBean"/>
+   	 </beans:bean>
+   	 
+   	 <beans:bean class="com.kh.store.AdminController">
+   		<beans:constructor-arg ref="administrator_daoBean"/>
+ 		<beans:constructor-arg ref="md_daoBean"/>  	 
+ 		<beans:constructor-arg ref="consumer_daoBean"/>  	 
+ 		<beans:constructor-arg ref="notice_daoBean"/>  	 
+ 		<beans:constructor-arg ref="order_daoBean"/>  	 
+ 		<beans:constructor-arg ref="product_daoBean"/> 
+ 		<beans:constructor-arg ref="mss"/>
+   	 </beans:bean>
+	
+	
+</beans:beans>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="a">
+	<select id="addr_list" resultType="addr" parameterType="String">
+		select * from ADDR where c_id=#{c_id}
+	</select>
+	
+	<insert id="addr_reg" parameterType="addr">
+		insert into addr values(
+			seq_addr_idx.nextVal,
+			#{a_name},
+			#{addr},
+			#{request},
+			#{c_id}	
+		)	
+	</insert>
+	
+	<delete id="addr_del" parameterType="int">
+		delete from addr where idx=#{idx}
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

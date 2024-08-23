@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="r">
+	<!-- 상세보기 간단 리뷰 -->
+	<select id="pro_review"  parameterType="int" resultType="review">
+		select * from review where p_idx=#{p_idx}
+	</select>
+	<!-- 리뷰 작성 -->
+	<insert id="review_insert" parameterType="review">
+		insert into review values(
+			seq_review_idx.nextVal,
+			#{c_id},
+			#{image},
+			#{content},
+			#{reviewscore},
+			sysdate,
+			#{p_idx}
+		)
+	</insert>
+	
+	<!-- 리뷰 수정 조회 -->
+	<select id="select_one" parameterType="int" resultType="review">
+		select r.*, p.p_name, p.volume 
+		from review r
+		join product p
+		on r.p_idx = p.p_idx
+		where r_idx=#{r_idx}
+	</select>
+	
+	<!-- 리뷰 수정 -->
+	<update id="review_update" parameterType="review">
+		update review set image=#{image}, reviewscore=#{reviewscore}, content=#{content}, regdate=sysdate
+		where r_idx=#{r_idx}
+	</update>
+	
+	<!-- 리뷰 조회 -->
+	<select id="review_list" resultType="review">
+		select r.*, p.volume, p.p_name from review r join product p on p.p_idx = r.p_idx
+		where r.c_id=#{c_id}
+	</select>
+	
+	<!-- 리뷰 삭제 -->
+	<delete id="review_delete" parameterType="int">
+		delete from review where r_idx=#{r_idx}
+	</delete>
+	
+	<select id="select_pidx" resultType="review" parameterType="int">
+		select p_idx, p_name, volume from product
+		
+	</select>
+	
+	<!-- 관리자 리뷰 조회 -->
+	<select id="review_manager" resultType="review">
+		select * from review
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

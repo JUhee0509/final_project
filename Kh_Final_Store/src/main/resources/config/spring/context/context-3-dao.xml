@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- si. dao생성 -->
+	
+	<bean id="notice_daoBean" class="dao.NoticeDAO">
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean> 
+	
+	<bean id="faq_daoBean" class="dao.FaqDAO"> 
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<bean id="inq_daoBean" class="dao.InquireDAO">
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<bean id="p_view_daoBean" class="dao.Pro_viewDAO">
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<bean id="inqcommBean" class="dao.InquireCommentDAO">
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<!-- 현준님 -->
+	
+	<bean id="addr_daoBean" class="dao.AddrDAO"> 
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<!-- 관리자 DAO -->
+	<bean id="administrator_daoBean" class="dao.AdministratorDAO">
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<bean id="blacklist_daoBean" class="dao.BlacklistDAO">
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<bean id="cart_daoBean" class="dao.CartDAO">
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<bean id="consumer_daoBean" class="dao.ConsumerDAO">
+		<constructor-arg name="sqlSession" ref="sqlSessionBean"/>
+	</bean>
+	
+	<bean id="md_daoBean" class="dao.MdDAO">
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<bean id="orderdetail_daoBean" class="dao.OrderdetailDAO">
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<bean id="pick_daoBean" class="dao.PickDAO">
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<bean id="product_daoBean" class="dao.ProductDAO">
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<bean id="reviewcomment_daoBean" class="dao.ReviewcommentDAO">
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<bean id="review_daoBean" class="dao.ReviewDAO">
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<bean id="order_daoBean" class="dao.OrderDAO">
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<bean id="receipt_daoBean" class="dao.ReceiptDAO">
+	<constructor-arg name="sqlSession" ref="sqlSessionBean"/>
+	</bean>
+</beans>

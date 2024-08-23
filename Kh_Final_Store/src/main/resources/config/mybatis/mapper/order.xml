@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="o">
+	<select id="order_detail" resultType="order">
+		select o.paytime, o.o_idx, o.status, o.p_idx, 
+		p.price, p.p_rate, p.p_name, p.brand, p.volume, p.s_image
+		<!--, c.amount  -->
+		from orderdetail o
+		join product p 
+		on o.p_idx = p.p_idx
+		<!-- join cart c 
+		on o.c_id = c.c_id -->
+		where status = '입금' or status = '결제'
+		and o.c_id=#{c_id}
+	</select>
+	
+	<!-- order_id 아니고 o_idx -->
+	
+	<!-- 배송완료 목록-->
+	<select id="order_fin" resultType="order">
+		select o.*, p.*<!-- , c.amount  -->
+		from orderdetail o
+		join product p 
+		on o.p_idx = p.p_idx
+		<!-- join cart c 
+		on o.c_id = c.c_id -->
+		where status = '배송완료' and o.c_id=#{c_id}
+	</select>
+	
+	<select id="order_ship" resultType="order">
+		select o.*, p.*<!-- , c.amount  -->
+		from orderdetail o
+		join product p 
+		on o.p_idx = p.p_idx
+		<!-- join cart c 
+		on o.c_id = c.c_id -->
+		where status = '배송중' and o.c_id=#{c_id}
+	</select>
+	
+	<select id="order_ready" resultType="order">
+		select o.*, p.*<!-- , c.amount  -->
+		from orderdetail o
+		join product p 
+		on o.p_idx = p.p_idx
+		<!-- join cart c 
+		on o.c_id = c.c_id -->
+		where status = '배송준비중' and o.c_id=#{c_id}
+	</select>
+	
+	<select id="order_refund" resultType="order" parameterType="String">
+		select o.*, p.*<!-- , c.amount  -->
+		from orderdetail o
+		join product p 
+		on o.p_idx = p.p_idx
+		<!-- join cart c 
+		on o.c_id = c.c_id -->
+		where status = '교환' or status = '환불' or status = '취소' and o.c_id=#{c_id}
+	</select>
+	
+	<!-- 관리자 주문 관리 -->
+	<select id="order_list" resultType="order" parameterType="String">
+		select o.paytime, o.o_idx, o.status, o.p_idx, o.c_id,
+		p.price, p.p_name, p.brand, p.volume, p.s_image,
+		c.amount
+		from orderdetail o
+		join product p 
+		on o.p_idx = p.p_idx
+		join cart c 
+		on o.p_idx = c.p_idx
+		order by o.o_idx desc
+	</select>
+	
+	<!-- 배송 전 주문 취소 -->
+	<update id="pay_update" parameterType="int">
+		update orderdetail set status='취소' where o_idx=#{o_idx}
+	</update>
+	
+	<!-- 교환 -->
+	<update id="ex_update" parameterType="int">
+		update orderdetail set status='교환' where o_idx=#{o_idx}
+	</update>
+	
+	<!-- 환불 -->
+	<update id="update_refund" parameterType="int">
+		update orderdetail set status='환불' where o_idx=#{o_idx}
+	</update>
+	
+	<!-- 추가 -->
+	<insert id="insert_order" parameterType="java.util.Map">
+		insert into ORDERDETAIL values(
+				seq_od_idx.nextVal,
+				'입금', 
+				sysdate, 
+				#{p_idx}, 
+				#{c_id}
+				)
+	</insert>
+	
+	<!-- 배송준비중으로 변경(관리자) -->
+	<update id="update_ready" parameterType="int">
+		update orderdetail set status='배송준비중' where o_idx=#{o_idx}
+	</update>
+	
+	<!-- 배송중으로 변경(관리자) -->
+	<update id="update_shipping" parameterType="int">
+		update orderdetail set status='배송중' where o_idx=#{o_idx}
+	</update>
+	
+	<!-- 배송완료로 변경(관리자) -->
+	<update id="update_complete" parameterType="int">
+		update orderdetail set status='배송완료' where o_idx=#{o_idx}
+	</update>
+	
+	<!-- 페이지 메뉴에 필요한 전체 주문 수 -->
+	<select id="order_count" resultType="int" parameterType="java.util.Map">
+		select count(*) from orderdetail
+	
+		<!-- myBatis 동적쿼리 : 상황에 따라 동적인 SQL문장이 실행될 수 있도록 하는 기능 -->
+		<!-- prefix 쿼리를 붙여서 출발 -->
+		<!-- where or, where and와 같이 문법적으로 사용 불가한 or, and로
+			시작되는 상황일 때 이를 제거해주는 속성이 prefixOverrides다 -->
+		
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

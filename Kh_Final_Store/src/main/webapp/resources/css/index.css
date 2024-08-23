@@ -1,0 +1,80 @@
+/* index.jsp 스타일 시트 */
+/* 전체적인 레이아웃과 스타일 설정 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: white; /* 헤더 배경색 설정 */
+    transition: box-shadow 0.3s; /* 부드러운 전환 효과 추가 */
+}
+
+header.scrolled {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 약간의 그림자 효과 추가 */
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%; /* 퍼센트 단위로 변경 */
+    height: 50px;
+    max-width: 1000px; /* 최대 너비 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+}
+
+.sub_title2 {
+    margin-left: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 5%; /* 퍼센트 단위로 변경 */
+    height: 30px;
+    max-width: 1000px; /* 최대 너비 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+}
+
+.logo a {
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 30px;
+    color: #004d00;
+}
+
+.sub_title2 ul, .sub_title ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.sub_title ul li {
+    display: inline;
+}
+
+.sub_title2 ul li a, .sub_title ul li a {
+    text-decoration: none;
+    color: #000;
+    font-size: 13px;
+}
+
+.sub_title ul li a {
+    font-size: 16px;
+    color: #000;
+    font-weight: bold;
+}
+
+.sub_title ul li img {
+    width: 20px;
+    height: 20px;
+}
+
+body .hr {
+    width: 100%;
+    border: none;
+    border-top: 2px solid #ccc;
+    margin: 0;
+}

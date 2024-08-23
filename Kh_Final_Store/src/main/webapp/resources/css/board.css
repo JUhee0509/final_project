@@ -1,0 +1,136 @@
+@charset "UTF-8";
+		.fixed-header {position: fixed;
+   			   top: 0;
+               left: 0;
+               width: 100%;
+               background-color: white;
+               z-index: 1000;
+               height: 80px;}
+		
+		.wrapper{
+			padding-top: 90px;
+			background-color: fff;
+			position: relative;;
+		}
+		
+        input[type="button"] {
+            padding: 10px 20px;
+            background-color: #004d00;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 75%;
+            border-collapse: collapse;
+            margin: 0 auto 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            text-align: center;
+           overflow: hidden;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+        
+        .table{
+        	margin-top: 50px;
+        }
+
+		a{
+			text-decoration: none;
+			color : #000;
+		}
+
+        a:hover {
+            color: #004d00;
+        }
+
+        .pageMenu {
+            margin: 20px auto;	
+            text-align: center;
+            font-size: 20px;
+        }
+        
+        
+		/* board.jsp */
+			
+			.board_menu{padding-top: 80px;
+			text-align: center;
+			}
+		
+		
+		
+		
+		
+		/* <input type="text"> */
+		.text{
+			width : 100%;
+			border : none;
+			resize: none;
+			outline: none;
+		}
+		
+		/* 문의글 중 선택사항 및 첨부파일 테이블 왼쪽 정렬 */
+		.selected{
+			float: left;
+		}
+		
+		/* 문의 종류 서식 */
+        
+        .inquire_list select {
+            padding: 2px;
+            /* font-size: 14px; */
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+		
+		/* 게시판 종류 */
+		.text_container{
+			text-align: center;
+			line-height: 6px;
+			margin-top: 70px;
+		}
+		
+		.text_container h1{
+			text-decoration: underline;
+			margin-bottom: 10px;
+		}
+		
+		/* 문의 중 하단 버튼 정렬 */
+		.btn_container_bottom{
+			text-align: center;
+		}
+		
+		.btn_container_top{
+			text-align: right;
+			margin-right: 250px;
+			
+		}
+		
+		/* faq */
+		
+		.faq_container{
+			text-align: center;
+		}
+		
+		.question {
+			cursor:pointer;
+		    font-weight: bold;
+		    color: #333;
+		    margin: 20px 0;
+		}
+
+		.answer {
+	 		color: #000;
+		    margin:20px 0;
+		    display: none;
+		}
+		
+

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="re">
+	<select id="receipt" resultType="receipt" parameterType="java.util.Map">
+		select p.*, c.amount
+		from product p
+		join cart c
+		on p.p_idx = c.p_idx
+		where c_id = #{c_id}
+	</select>
+	
+	<!-- 주문자, 주소지 조회 -->
+	<select id="receipt_one" resultType="receipt" parameterType="java.util.Map">
+			select c.name, c.tel, c.email, a.request, a.addr 
+				from consumer c
+				join addr a
+				on a.c_id = c.c_id
+				where a.c_id = #{c_id} and a.addr =#{addr}
+	</select>
+	
+	<!-- 총 상품 금액 계산 -->
+	<select id="total_price" resultType="int" parameterType="java.util.Map">
+		select nvl(sum(p.price * c.amount),0)
+			from cart c
+			join product p
+			on c.p_idx = p.p_idx
+			where c_id=#{c_id}
+	</select>
+	
+	<!-- 총 할인금액 계산 -->
+	<select id="total_sale_price" resultType="int" parameterType="java.util.Map">
+		SELECT NVL(SUM(p.price * c.amount * p_rate / 100), 0) + co.bonus_point
+			FROM cart c
+			JOIN product p ON c.p_idx = p.p_idx
+			JOIN consumer co ON c.c_id = co.c_id
+			WHERE c.c_id = #{c_id}
+			GROUP BY c.c_id, co.bonus_point
+	</select>
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

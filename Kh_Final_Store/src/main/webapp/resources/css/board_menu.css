@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+body{
+	text-align: center;
+	 align-items: center;
+}
+
+.board_container {
+	overflow: hidden;
+	padding: 5px 0 0;/* board.css의 fixed-header 겹치는 문제 방지를 위해  padding 변경 */
+	margin: 0 auto;
+	width:600px;
+	
+}
+
+.board_container hr {
+	float:left;
+	width: 600px;
+}
+
+.board_container ul li {
+	list-style: none;
+	float: left;
+	height: 50px;
+	margin: 0 30px;
+	color:black;
+}
+
+.board_container ul li a {
+	display: block;
+	padding: 10px;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.board_container ul li a:hover {
+	color: #004d00;
+}

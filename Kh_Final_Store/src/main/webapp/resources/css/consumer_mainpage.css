@@ -1,0 +1,77 @@
+/* homepage_main.jsp 스타일 시트 */
+@charset "UTF-8";
+.fixed-header {position: fixed;
+   			   top: 0;
+               left: 0;
+               width: 100%;
+               background-color: white;
+               z-index: 1000;
+               height: 80px;}
+    
+.wrap {padding-top: 80px;
+	   height: 400px;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       margin: 0 auto;
+       position: relative;}
+
+/* 소비자 페이지 광고  */
+.img_header {sposition: absolute;
+	         width: 1000px;
+	         overflow: hidden;}
+
+.img_inner {display: flex;
+	        flex-wrap: wrap;
+	        width: 6000px;
+	        ustify-content: center; 
+    		align-items: center;}
+    		
+.slider_dot {position: absolute;
+	         left: 50%;
+	         bottom: 1px;
+	         z-index:1;
+	         transform: translateX(-50%);}
+	
+.slider_dot .dot {width: 15px;
+	              height: 15px;
+	              background-color:  rgba(0, 0, 0, 0.1);
+	              display: inline-block;
+	              border-radius: 50%;
+	              text-indent: -9999px;}
+	
+.slider_dot .dot.active {background-color: #fff;}
+
+.md_pick{padding-top: 50px;}
+
+.md_pick, .popular_product {
+    width: 100%;
+    max-width: 1000px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 500;
+}
+
+
+#more-Button {
+    display: block;
+    width: 100px;
+    margin: 20px auto;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    background-color: white;
+    border: 1px solid #000;
+}
+
+#more-Button:hover {
+    background-color: white;
+    border: 1px solid #000;
+}

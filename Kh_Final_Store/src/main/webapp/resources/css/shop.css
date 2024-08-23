@@ -1,0 +1,90 @@
+@charset "UTF-8";
+.fixed-header {position: fixed;
+   			   top: 0;
+               left: 0;
+               width: 100%;
+               background-color: white;
+               z-index: 1000;
+               height: 80px;}
+               
+input[type="button"] {
+            padding: 10px 20px;
+            background-color: #004d00;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 20px auto 0;
+            
+        }
+        /* Main content */
+        .board_container {
+            margin-top: 20px; /* Adjust based on your header height */
+            padding: 80px 20px 20px 20px; /* fixed-header 간섭 방지를 위해 padding 값 조정했습니다 */
+        }
+        
+        .search_table {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .search_table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .search_table table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        
+        .product_listing {
+            margin-bottom: 20px;
+           	text-align: left;
+        }
+        
+        .product_listing select {
+        	
+            padding: 10px;
+            margin: auto 80px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            overflow: hidden;
+            width: 100%;
+            margin: 20px auto;
+        }
+        
+        .md-item {
+            width: 20%;
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: box-shadow 0.3s ease-in-out;
+            cursor: pointer;
+            float: left;
+        }
+        
+        .md-item:nth-child(4n+1){
+        	margin-left: 80px;
+        }
+        
+        
+        .md-item img {
+            width: 80%;
+            height: auto;
+            margin: 10px auto;
+        }
+        
+        .md-item span{
+        	text-decoration: line-through;
+        }

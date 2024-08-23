@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ic">
+	<!-- 문의 댓글(관리자 답) 조회 -->
+	<select id="inqc_select" resultType="inqcomm"
+		parameterType="int">
+		select * from INQUIRECOMMENT where i_idx=#{i_idx} order
+		by regdate
+	</select>
+
+	<!-- 데이터 삽입 -->
+	<insert id="inqc_insert" parameterType="inqcomm">
+		insert into
+		INQUIRECOMMENT values(seq_incomm_idx.nextVal, #{i_idx}, #{content},
+		sysdate, #{a_id})
+	</insert>
+
+	<!-- 수정을 위한 정보 조회 -->
+	<select id="inqc_select_one" resultType="inqcomm"
+		parameterType="int">
+		select * from INQUIRECOMMENT where i_idx=#{i_idx}
+	</select>
+
+
+	<!-- 답변 수정 -->
+	<update id="inqc_update" parameterType="inqcomm">
+		update INQUIRECOMMENT set
+		content=#{content}, a_id=#{a_id}, regdate=sysdate where c_idx=#{c_idx}
+	</update>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

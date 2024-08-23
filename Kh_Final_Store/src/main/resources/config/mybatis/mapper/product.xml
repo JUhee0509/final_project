@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pd">
+	<!-- SHOP 페이지 전체조회. -->
+	<select id="product_list" resultType="Product">
+		select * from PRODUCT p
+
+		<trim prefix="where" prefixOverrides="or|and">
+
+			<!-- 검색어 존재 -->
+			<if test="search != null">
+				p_name like '%'||#{search}||'%'
+			</if>
+
+			<!-- 브랜드 -->
+			<if test="brand != null and brand.length > 0">
+				and brand IN
+				<!-- 여기서 array를 파라미터로 받을 수는 있지만, map으로 보낸 배열만 인식한다. -->
+				<foreach collection="brand" item="brand" open="("
+					separator="," close=")">
+					#{brand}
+				</foreach>
+			</if>
+
+			<!-- 향 -->
+			<if test="scent != null and scent.length > 0">
+				and scent IN
+				<!-- 여기서 array를 파라미터로 받을 수는 있지만, map으로 보낸 배열만 인식한다. -->
+				<foreach collection="scent" item="scent" open="("
+					separator="," close=")">
+					#{scent}
+				</foreach>
+			</if>
+
+			<!-- 용량 -->
+			<if test="volume != null and volume.length > 0">
+				and volume IN
+				<!-- 여기서 array를 파라미터로 받을 수는 있지만, map으로 보낸 배열만 인식한다. -->
+				<foreach collection="volume" item="volume" open="("
+					separator="," close=")">
+					#{volume}
+				</foreach>
+			</if>
+
+			<!-- 가격 -->
+			<if test="price != null and price.size > 0">
+				and (
+				<trim prefix="" prefixOverrides="or/and">
+					<foreach collection="price" item="priceItem" open=""
+						separator="or" close="">
+						price BETWEEN #{priceItem.min} and
+						#{priceItem.max}
+					</foreach>
+					)
+				</trim>
+			</if>
+
+			<!-- 성별 -->
+			<if test="gender != null">
+				and gender=#{gender}
+			</if>
+
+		</trim>
+		
+		<!-- 정렬 기준 -->
+		<if test="optional != null">
+			order by
+			<if test="optional == 'higher'">
+				price desc
+			</if>
+			<if test="optional == 'lower'">
+				price
+			</if>
+			<if test="optional == 'popular'">
+				sales
+			</if>
+			<if test="optional == 'more_review'">
+				(select count(*) from REVIEW r where r.p_idx = p.p_idx)
+				desc
+			</if>
+		</if>
+
+	</select>
+
+	<!-- 가격낮은순 -->
+	<select id="product_high" resultType="prod">
+		select * from PRODUCT order
+		by price DESC
+	</select>
+
+	<!-- 제품 등록(관리자권한 미리 구현) -->
+	<insert id="prod_update" parameterType="prod">
+		insert into PRODUCT
+		values(
+		seq_pro_idx.nextVal,
+		#{brand},
+		#{p_name},
+		#{scent},
+		#{s_image},
+		#{l_image},
+		#{ad_image},
+		#{price},
+		#{p_rate},
+		#{volume},
+		#{stock},
+		#{sales},
+		#{gender})
+	</insert>
+
+	<!-- 찜(pick)에서의 상품조회 -->
+	<select id="pick_select" parameterType="String"
+		resultType="prod">
+		select pd.p_idx, pd.brand, pd.p_name, pd.s_image, pd.price,
+		pd.p_rate, pd.volume
+		from PRODUCT pd
+		JOIN PICK p
+		ON pd.p_idx = p.p_idx
+		WHERE p.c_id=#{c_id}
+	</select>
+
+	<!-- 메인페이지 md 상품조회 -->
+	<select id="pro_view" parameterType="int" resultType="prod">
+		select *
+		from product where p_idx=#{p_idx}
+	</select>
+
+	<!-- 검색 기준 조회 -->
+	<select id="select_things" resultType="String">
+		select distinct
+
+		<if test="standard == 'brand'">
+			brand from PRODUCT order by brand
+		</if>
+		<if test="standard == 'scent'">
+			scent from PRODUCT order by scent
+		</if>
+		<if test="standard == 'volume'">
+			volume from PRODUCT order by volume
+		</if>
+
+		<if test="standard == 'gender'">
+			gender from PRODUCT
+		</if>
+
+	</select>
+
+	<!-- 검색 기준 중 가격 조회 -->
+	<select id="select_price" resultType="int">
+		select MAX(price) from
+		PRODUCT
+	</select>
+
+	<!-- 제품 삭제 -->
+	<delete id="product_delete">
+		delete from PRODUCT where p_idx=#{p_idx}
+	</delete>
+
+	<!-- 제품 수정 폼가기 -->
+	<select id="product_check" parameterType="int" resultType="prod">
+		select * from product where p_idx=#{p_idx}
+	</select>
+	<!-- 제품 수정 -->
+	<update id="product_modify" parameterType="prod">
+		update product set
+		BRAND=#{brand},
+		P_NAME=#{p_name},
+		SCENT=#{scent},
+		S_IMAGE=#{s_image},
+		L_IMAGE=#{l_image},
+		AD_IMAGE=#{ad_image},
+		PRICE=#{price},
+		P_RATE=#{p_rate},
+		VOLUME=#{volume},
+		STOCK=#{stock},
+		SALES=#{sales},
+		gender=#{gender}
+		where p_idx=#{p_idx}
+	</update>
+
+	<!-- 오늘 판매량 상위 5개 제품 -->
+	<select id="select_products" resultType="prod">
+		select distinct
+		p.p_name, p.sales
+		from PRODUCT p
+		JOIN ORDERDETAIL o
+		ON p.p_idx = o.p_idx
+		where o.paytime &gt;=
+		TRUNC(sysdate) AND o.paytime &lt; (TRUNC(sysdate)+1)
+		AND ROWNUM &lt;6
+	</select>
+	<select id="product_count" resultType="int"
+	        parameterType="java.util.Map">
+		select count(*) from product
+	</select>
+	<select id="admin_product_list" resultType="Product" parameterType="java.util.Map">
+    select * from 
+    ( select rank() over(order by p_idx DESC) no, p.*
+      from ( select * from PRODUCT 
+      <trim prefix="where" prefixOverrides="or|and">
+
+        <!-- 검색어 존재 -->
+        <if test="search != null">
+            p_name like '%'||#{search}||'%'
+        </if>
+
+        <!-- 브랜드 -->
+        <if test="brand != null and brand.length > 0">
+            and brand IN
+            <foreach collection="brand" item="brand" open="(" separator="," close=")">
+                #{brand}
+            </foreach>
+        </if>
+        
+      </trim>
+    ) p )
+    where no BETWEEN #{start} and #{end}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

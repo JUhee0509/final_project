@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca">
+	<!-- 장바구니 목록 -->
+	<select id="cart_list" resultType="cart">
+		select c.*, p.*
+		from cart c
+		join product p
+		on c.p_idx = p.p_idx
+		where c.c_id=#{c_id}
+	</select>
+	
+	<!-- 장바구니 목록 삭제  -->
+	<delete id="delete" parameterType="int">
+		delete from cart where c_idx=#{c_idx}
+	</delete>
+	
+	<delete id="delete_order" parameterType="int">
+		delete from cart where c_idx=#{c_idx}
+	</delete>
+	
+	<!-- 주소 목록 추가 -->
+	<select id="addr" resultType="cart">
+		select * from addr where c_id=#{c_id}
+	</select>
+	
+	<!-- 장바구니 총 합 -->
+	<select id="cart_total_price" resultType="int" parameterType="String">
+		select nvl(sum(p.price * (100-p.p_rate)/100  * c.amount),0)
+			from cart c
+			join product p
+			on c.p_idx = p.p_idx
+			where c.c_id=#{c_id}
+	</select>
+	
+	<!-- 결제 금액 -->
+	<select id="cart_pay_price" resultType="int" parameterType="String">
+		SELECT NVL(total_sale_price, 0) - co.bonus_point
+		FROM (
+		    SELECT SUM(p.price * (100-p.p_rate)/100 * c.amount) AS total_sale_price, c.c_id
+		    FROM cart c
+		    JOIN product p ON c.p_idx = p.p_idx
+		    WHERE c.c_id = #{c_id}
+		    GROUP BY c.c_id
+		) sub
+		JOIN consumer co ON sub.c_id = co.c_id
+		WHERE co.c_id = #{c_id}
+	</select>
+	
+	<select id="cart_bonus_point" resultType="int">
+		select bonus_point from consumer
+		where c_id = #{c_id}
+	</select>
+	
+	<update id="amount_plus" parameterType="int">
+		update cart set amount=amount+1 where p_idx=#{p_idx}
+	</update>
+	
+	<update id="amount_minus" parameterType="int">
+		update cart set amount=amount-1 where p_idx=#{p_idx}
+	</update>
+	
+	<update id="check_on" parameterType="int">
+		update cart set amount = #{amount} where p_idx=#{p_idx}
+	</update>
+	
+	<update id="check_off" parameterType="int">
+		update cart set amount = 0 where p_idx=#{p_idx}
+	</update>
+	
+	<insert id="cart_insert" parameterType="java.util.Map">
+      insert into CART values(seq_cart_idx.nextVal, 1, 1, #{c_id}, #{p_idx})
+   </insert>
+   
+   
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

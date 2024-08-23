@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="p">
+	<insert id="pick_insert" parameterType="java.util.Map">
+		insert into CART values(seq_cart_idx.nextVal, 1, 1, #{c_id}, #{p_idx})
+		<!-- insert into Pick values(seq_pick_idx.nextVal, 44, '1gil') -->
+	</insert>
+	
+	<!-- 장바구니에 해당 번호 있는지 확인 -->
+	<select id="check_pick_exists" resultType="int" parameterType="java.util.Map">
+	    SELECT COUNT(*) FROM CART
+	    WHERE c_id = #{c_id} AND p_idx = #{p_idx}
+	</select>
+	
+	<insert id="pick_JJIM" parameterType="java.util.Map">
+		insert into pick values(seq_pick_idx.nextVal, #{p_idx}, #{c_id})
+	</insert>
+	
+	<!-- 찜목록 삭제하기 sql -->
+	<delete id="pick_delete" parameterType="java.util.Map">
+	 	delete from pick where p_idx=#{p_idx}
+	</delete>
+	
+	<select id="pick_check" resultType="pick" parameterType="java.util.Map">
+	SELECT  p.p_idx
+	FROM consumer c
+	JOIN pick p 
+	ON c.c_id = p.c_id
+	WHERE c.c_id = #{c_id} and p.p_idx = #{p_idx}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

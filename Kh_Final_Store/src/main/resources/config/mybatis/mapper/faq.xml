@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="f">
+
+	<!-- faq 전체조회 -->
+	<select id="faq_list" resultType="faq">
+		select * from faq order by idx DESC
+	</select>
+	
+	<!-- 새 글 등록 -->
+	<insert id="faq_insert" parameterType="faq">
+		insert into faq values(
+			seq_faq_idx.nextVal,
+			#{question},
+			#{answer},
+			sysdate,
+			#{a_id}
+		)
+	</insert>
+	
+	<!-- 수정 조회 -->
+	<select id="select_one" parameterType="int" resultType="faq">
+		select * from faq where idx=#{idx}
+	</select>
+	
+	<!-- 수정 -->
+	<update id="faq_update" parameterType="faq">
+		update faq set question=#{question}, answer=#{answer}, regdate=sysdate
+		where idx=#{idx}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="faq_delete" parameterType="int">
+		delete from faq where idx=#{idx}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
